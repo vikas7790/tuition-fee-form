@@ -1,0 +1,1288 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
+<meta name="theme-color" content="#800000" />
+<meta name="description" content="Mobile-friendly CEA tuition fee reimbursement form with print and PDF support." />
+<meta name="application-name" content="CEA Tuition Form" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-title" content="CEA Form" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<title>CEA Tuition Fee — Entry & Print</title>
+<style>
+  :root{
+    --maroon:#800000;
+    --maroon-dark:#5c0000;
+    --maroon-light:#a0263d;
+    --yellow:#f5c518;
+    --yellow-soft:#ffd84d;
+    --cream:#fff8e1;
+    --ink:#2b1a17;
+    --ink-soft:#5a4540;
+    --shadow:0 6px 18px rgba(128,0,0,.15);
+    --radius:10px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #ffe58a40, transparent 60%),
+      radial-gradient(1000px 500px at 110% 0%, #ffcf4f30, transparent 55%),
+      linear-gradient(180deg,#fff8e1,#fff2c9);
+    color:var(--ink);
+    -webkit-text-size-adjust:100%;
+    line-height:1.45;
+    min-height:100vh;
+  }
+  header.topbar{
+    position:sticky; top:0; z-index:50;
+    background:linear-gradient(135deg,var(--maroon) 0%,var(--maroon-light) 100%);
+    color:#fff;
+    padding:14px 18px;
+    box-shadow:var(--shadow);
+    border-bottom:3px solid var(--yellow);
+  }
+  header.topbar h1{
+    margin:0; font-size:clamp(16px,3.6vw,20px); letter-spacing:.3px;
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  header.topbar h1 .badge{
+    background:var(--yellow); color:var(--maroon-dark);
+    padding:3px 10px; border-radius:999px; font-size:12px; font-weight:700;
+  }
+  header.topbar .sub{ margin-top:4px; font-size:12px; opacity:.9 }
+
+  main{ max-width:780px; margin:0 auto; padding:18px 14px 210px; }
+
+  .card{
+    background:#fffdf4;
+    border:1px solid #f0d58a;
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px 16px 20px;
+    margin:14px 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:5px;
+    background:linear-gradient(90deg,var(--maroon),var(--yellow),var(--maroon));
+  }
+  .card h2{
+    margin:4px 0 12px;
+    font-size:16px;
+    color:var(--maroon-dark);
+    text-transform:uppercase; letter-spacing:.5px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .card h2 .ico{
+    width:26px; height:26px; border-radius:50%;
+    background:var(--yellow); color:var(--maroon-dark);
+    display:inline-flex; align-items:center; justify-content:center;
+    font-size:14px; font-weight:800;
+  }
+
+  label{
+    display:block; font-size:12px; font-weight:700;
+    color:var(--maroon-dark); margin:0 0 5px;
+    text-transform:uppercase; letter-spacing:.3px;
+  }
+  .hint{ font-size:11px; color:var(--ink-soft); font-weight:500; margin-top:4px }
+
+  input[type=text],input[type=date],input[type=number],input[type=tel],select,textarea{
+    width:100%;
+    min-height:44px;
+    font-size:16px;
+    padding:10px 12px;
+    border:1.5px solid #e2b98a;
+    background:#fffef7;
+    border-radius:8px;
+    color:var(--ink);
+    font-family:inherit;
+    transition:border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    -webkit-appearance:none;
+    appearance:none;
+  }
+  textarea{ min-height:60px; resize:vertical }
+  select{
+    background-image:
+      linear-gradient(45deg,transparent 50%,var(--maroon) 50%),
+      linear-gradient(135deg,var(--maroon) 50%,transparent 50%);
+    background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+    background-size:6px 6px;
+    background-repeat:no-repeat;
+    padding-right:34px;
+  }
+  input:focus,select:focus,textarea:focus{
+    outline:none;
+    border-color:var(--maroon);
+    box-shadow:0 0 0 3px rgba(245,197,24,.45);
+    background:#fff;
+  }
+
+  .grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+  @media (min-width:560px){
+    .grid.c2{ grid-template-columns:1fr 1fr }
+    .grid.c3{ grid-template-columns:1fr 1fr 1fr }
+    .span-2{ grid-column:span 2 }
+  }
+
+  .child-block{
+    border:1.5px dashed var(--maroon-light);
+    border-radius:10px;
+    padding:12px 12px 14px;
+    margin-top:10px;
+    background:#fffbe8;
+  }
+  .child-block h3{
+    margin:0 0 10px; font-size:13px; color:var(--maroon-dark);
+    text-transform:uppercase; letter-spacing:.4px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .child-block h3 .chip{
+    background:var(--maroon); color:#fff;
+    padding:2px 8px; border-radius:999px; font-size:11px;
+  }
+
+  .row-pair{
+    display:grid; gap:8px;
+    grid-template-columns:1fr;
+    padding:8px;
+    border:1px solid #e9d39b;
+    border-radius:8px;
+    background:#fff;
+    margin-top:8px;
+  }
+  @media (min-width:560px){
+    .row-pair{ grid-template-columns: 1.4fr 1fr 1fr 1.4fr }
+  }
+
+  .total-bar{
+    margin-top:12px;
+    background:var(--yellow);
+    color:var(--maroon-dark);
+    border:1.5px solid var(--maroon);
+    border-radius:999px;
+    padding:10px 18px;
+    font-weight:800;
+    display:flex; justify-content:space-between; align-items:center;
+    gap:10px;
+  }
+  .total-bar .amt{
+    background:#fff; border:1.5px solid var(--maroon);
+    padding:4px 14px; border-radius:999px; min-width:130px;
+    text-align:right; color:var(--maroon-dark);
+  }
+
+  .reveal{ display:none }
+  .reveal.on{ display:block }
+
+  /* Action bar */
+  .actionbar{
+    position:fixed; left:0; right:0; bottom:0;
+    background:linear-gradient(180deg,rgba(255,248,225,.85),rgba(255,248,225,.98));
+    backdrop-filter:blur(6px);
+    border-top:2px solid var(--maroon);
+    padding:10px 12px;
+    display:flex; gap:10px; justify-content:center; align-items:center;
+    flex-wrap:wrap;
+    z-index:40;
+  }
+  .btn{
+    font-size:14px; font-weight:700;
+    padding:11px 16px;
+    border-radius:999px; border:none; cursor:pointer;
+    transition:transform .12s ease, box-shadow .18s ease, background .18s ease;
+    min-height:44px;
+    display:inline-flex; align-items:center; gap:8px;
+  }
+  .btn:active{ transform:translateY(1px) }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--maroon),var(--maroon-light));
+    color:#fff; box-shadow:0 4px 14px rgba(128,0,0,.35);
+  }
+  .btn-primary:hover{ box-shadow:0 6px 20px rgba(128,0,0,.45) }
+  .btn-ghost{
+    background:var(--yellow); color:var(--maroon-dark);
+    box-shadow:0 4px 10px rgba(245,197,24,.45);
+  }
+  .btn-ghost:hover{ background:var(--yellow-soft) }
+  .btn-outline{
+    background:#fff; color:var(--maroon-dark);
+    border:1.5px solid var(--maroon);
+  }
+  .saved-tag{
+    font-size:11px; color:var(--maroon-dark); font-weight:700;
+    background:#fff; padding:4px 10px; border-radius:999px;
+    border:1px solid var(--yellow); min-width:90px; text-align:center;
+  }
+  .print-status{
+    display:none;
+    flex-basis:100%;
+    max-width:520px;
+    text-align:center;
+    font-size:11px;
+    line-height:1.35;
+    color:var(--maroon-dark);
+    font-weight:700;
+  }
+  .print-status.on{ display:block; }
+
+  /* ---------------- Preview / Print layout ---------------- */
+  .preview-wrap{ display:none; }
+  .preview-wrap.on{ display:block; margin-top:18px }
+
+  .preview-wrap .pv-note{
+    background:#fffbe8; border:1px dashed var(--maroon);
+    padding:8px 12px; border-radius:8px; font-size:12px;
+    color:var(--ink-soft); margin-bottom:10px;
+  }
+
+  .sheet{
+    background:#fff; color:#000;
+    border:1px solid #ccc;
+    box-shadow:0 2px 10px rgba(0,0,0,.12);
+    margin:0 auto 18px;
+    padding:18mm 16mm;
+    max-width:210mm;
+    font-family:"Times New Roman",Georgia,serif;
+    font-size:12.5pt;
+    line-height:1.55;
+    color:#000;
+  }
+  .sheet h1{
+    text-align:center; text-decoration:underline;
+    font-size:14pt; margin:0 0 14px; font-weight:700;
+  }
+  .sheet h2{
+    text-align:center; font-size:12pt; margin:0 0 14px; font-weight:700;
+  }
+  .sheet p{ margin:6px 0; text-align:left }
+  .sheet p.justify{ text-align:justify }
+  .sheet .blank{ white-space:nowrap }
+  .sheet b{ font-weight:700 }
+  .sheet .blank{
+    display:inline-block; min-width:120px;
+    border-bottom:1px solid #000; padding:0 4px;
+    font-weight:600;
+  }
+  .sheet .blank.wide{ min-width:240px }
+  .sheet .blank.narrow{ min-width:70px }
+  .sheet table{
+    width:100%; border-collapse:collapse;
+    margin:8px 0; font-size:11.5pt;
+  }
+  .sheet table th, .sheet table td{
+    border:1px solid #000; padding:6px 8px;
+    vertical-align:middle; text-align:left;
+  }
+  .sheet table th{ background:#eee; font-weight:700; text-align:center }
+  .sheet table td.center{ text-align:center }
+  .sheet table td.seq{ text-align:center; font-weight:600 }
+  /* All filled data values render bold */
+  .sheet [data-bind]{ font-weight:700 }
+  .sheet .num-list{ counter-reset:qn; margin:6px 0 }
+  .sheet .q{ display:flex; gap:8px; margin:6px 0 }
+  .sheet .q .n{ font-weight:700; min-width:22px }
+  .sheet .sig{
+    margin-top:28px;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:20px;
+  }
+  .sheet .sig .left{ min-width:140px }
+  .sheet .sig .right{ text-align:left; min-width:240px }
+  .sheet .sig .right .title{ font-weight:700; margin-bottom:6px }
+  .sheet .sig .right div{ margin:2px 0 }
+
+  /* Force page breaks in print */
+  .sheet{ page-break-after: always; }
+  .sheet:last-child{ page-break-after:auto }
+
+  @page { size: A4; margin: 0; }
+  @media print{
+    body{
+      background:#fff !important;
+      color:#000 !important;
+    }
+    header.topbar, .actionbar, main > form, .pv-note{ display:none !important }
+    .preview-wrap{ display:block !important; margin:0 !important; padding:0 !important }
+    .sheet{
+      box-shadow:none !important; border:none !important;
+      margin:0 !important; max-width:none !important;
+      padding:14mm 14mm !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <h1>
+    <span>CEA (Tuition Fee) Data Entry</span>
+    <span class="badge">Auto-fills the full proforma</span>
+  </h1>
+  <div class="sub">Only fill the details below — the full 4-page proforma is generated automatically when you print.</div>
+</header>
+
+<main>
+
+<form id="ceaForm" autocomplete="on" novalidate>
+
+  <!-- ---------- 1. Employee ---------- -->
+  <section class="card">
+    <h2><span class="ico">1</span> Employee &amp; Claim</h2>
+    <div class="grid c2">
+      <div>
+        <label for="empName">Name &amp; Rank of Govt. Servant</label>
+        <input type="text" id="empName" placeholder="e.g. Shri/Smt. …" />
+      </div>
+      <div>
+        <label for="empId">Emp. ID</label>
+        <input type="text" id="empId" inputmode="numeric" placeholder="Employee ID" />
+      </div>
+      <div>
+        <label for="designation">Designation</label>
+        <select id="designation">
+          <option value="">— Select —</option>
+          <optgroup label="Technical">
+            <option>Junior Engineer</option>
+            <option>Senior Section Engineer</option>
+            <option>Technician Gr-I</option>
+            <option>Technician Gr-II</option>
+            <option>Technician Gr-III</option>
+            <option>Chief Loco Inspector</option>
+          </optgroup>
+          <optgroup label="Operating / Station">
+            <option>Station Master</option>
+            <option>Station Superintendent</option>
+            <option>Traffic Inspector</option>
+            <option>Goods Guard</option>
+            <option>Passenger Guard</option>
+            <option>Loco Pilot</option>
+            <option>Asst. Loco Pilot</option>
+          </optgroup>
+          <optgroup label="Clerical / Accounts">
+            <option>Clerk</option>
+            <option>Senior Clerk</option>
+            <option>Chief Clerk</option>
+            <option>Office Superintendent</option>
+            <option>Accounts Assistant</option>
+            <option>Section Officer</option>
+          </optgroup>
+          <optgroup label="Teaching / School">
+            <option>Principal</option>
+            <option>Vice Principal</option>
+            <option>Head Master</option>
+            <option>Teacher (TGT)</option>
+            <option>Teacher (PGT)</option>
+            <option>Primary Teacher (PRT)</option>
+          </optgroup>
+          <optgroup label="Officer Cadre">
+            <option>Assistant Officer</option>
+            <option>Senior Scale Officer</option>
+            <option>Junior Administrative Grade (JAG)</option>
+            <option>Senior Administrative Grade (SAG)</option>
+          </optgroup>
+          <option value="__other__">Other…</option>
+        </select>
+        <input type="text" id="designation_other" class="reveal" placeholder="Enter designation" style="margin-top:6px" />
+      </div>
+      <div>
+        <label for="office">Name of Office</label>
+        <input type="text" id="office" placeholder="Division / Depot / School" />
+      </div>
+      <div>
+        <label for="ay">Claim for Academic Year</label>
+        <select id="ay">
+          <option value="">— Select —</option>
+          <option>2023-24</option>
+          <option>2024-25</option>
+          <option>2025-26</option>
+          <option>2026-27</option>
+          <option value="__other__">Other…</option>
+        </select>
+        <input type="text" id="ay_other" class="reveal" placeholder="e.g. 2027-28" style="margin-top:6px" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 2. Spouse ---------- -->
+  <section class="card">
+    <h2><span class="ico">2</span> Spouse</h2>
+    <div class="grid c2">
+      <div>
+        <label for="spouseCat">Spouse Employment</label>
+        <select id="spouseCat">
+          <option value="">— Select —</option>
+          <option>Not Employed</option>
+          <option>Central Government</option>
+          <option>Public Sector Undertaking (PSU)</option>
+          <option>State Government</option>
+          <option>Railway</option>
+          <option>Private Sector</option>
+          <option>Self-Employed</option>
+          <option value="__other__">Other…</option>
+        </select>
+        <input type="text" id="spouseCat_other" class="reveal" placeholder="Enter category" style="margin-top:6px" />
+      </div>
+      <div>
+        <label for="spouseName">Spouse Name (Sri / Smt.)</label>
+        <input type="text" id="spouseName" placeholder="Spouse full name" />
+      </div>
+      <div>
+        <label for="spouseAs">Spouse Working As</label>
+        <input type="text" id="spouseAs" placeholder="Role / Post" />
+      </div>
+      <div>
+        <label for="spouseOffice">Spouse Office / Employer</label>
+        <input type="text" id="spouseOffice" placeholder="Office / Employer" />
+      </div>
+      <div>
+        <label for="spouseBU">Designation / Office / B.U. No. (if Railway)</label>
+        <input type="text" id="spouseBU" placeholder="Leave blank if not Railway" />
+      </div>
+      <div>
+        <label for="spouseApplied">Has / Will Apply for CEA?</label>
+        <select id="spouseApplied">
+          <option value="shall not apply / has not applied" selected>Shall Not Apply / Has Not Applied</option>
+          <option value="shall apply / has applied">Shall Apply / Has Applied</option>
+        </select>
+      </div>
+      <div>
+        <label for="q16a">Self / Spouse is Central Govt. Servant?</label>
+        <select id="q16a">
+          <option value="is not" selected>Is NOT a Central Govt. Servant</option>
+          <option value="is">IS a Central Govt. Servant</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 3. Children ---------- -->
+  <section class="card">
+    <h2><span class="ico">3</span> Children</h2>
+
+    <div class="child-block">
+      <h3><span class="chip">1st</span> First Child</h3>
+      <div class="grid c2">
+        <div>
+          <label for="c1_name">Name</label>
+          <input type="text" id="c1_name" placeholder="Full name" />
+        </div>
+        <div>
+          <label for="c1_dob">Date of Birth</label>
+          <input type="date" id="c1_dob" />
+        </div>
+        <div>
+          <label for="c1_gender">Master / Kumari</label>
+          <select id="c1_gender">
+            <option value="Master">Master (Son)</option>
+            <option value="Kumari">Kumari (Daughter)</option>
+          </select>
+        </div>
+        <div>
+          <label for="c1_std">Standard / Class</label>
+          <select id="c1_std">
+            <option value="">— Class —</option>
+            <option>Nursery / Play</option><option>LKG</option><option>UKG</option>
+            <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option>
+            <option>5th</option><option>6th</option><option>7th</option><option>8th</option>
+            <option>9th</option><option>10th</option><option>11th</option><option>12th</option>
+          </select>
+        </div>
+        <div class="span-2">
+          <label for="c1_school">School Name &amp; Place</label>
+          <input type="text" id="c1_school" placeholder="School name, place" />
+        </div>
+      </div>
+    </div>
+
+    <div class="child-block">
+      <h3><span class="chip">2nd</span> Second Child <span class="hint">(leave blank if only one)</span></h3>
+      <div class="grid c2">
+        <div>
+          <label for="c2_name">Name</label>
+          <input type="text" id="c2_name" placeholder="Full name" />
+        </div>
+        <div>
+          <label for="c2_dob">Date of Birth</label>
+          <input type="date" id="c2_dob" />
+        </div>
+        <div>
+          <label for="c2_gender">Master / Kumari</label>
+          <select id="c2_gender">
+            <option value="Master">Master (Son)</option>
+            <option value="Kumari">Kumari (Daughter)</option>
+          </select>
+        </div>
+        <div>
+          <label for="c2_std">Standard / Class</label>
+          <select id="c2_std">
+            <option value="">— Class —</option>
+            <option>Nursery / Play</option><option>LKG</option><option>UKG</option>
+            <option>1st</option><option>2nd</option><option>3rd</option><option>4th</option>
+            <option>5th</option><option>6th</option><option>7th</option><option>8th</option>
+            <option>9th</option><option>10th</option><option>11th</option><option>12th</option>
+          </select>
+        </div>
+        <div class="span-2">
+          <label for="c2_school">School Name &amp; Place</label>
+          <input type="text" id="c2_school" placeholder="School name, place" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 4. Expenditure ---------- -->
+  <section class="card">
+    <h2><span class="ico">4</span> Amount Claimed</h2>
+    <div class="hint" style="margin-bottom:8px">
+      Period = the Academic Year chosen above. CEA is <b>per month</b>; annual amount auto-calculates as <b>Rate × 12</b>. Default monthly rate is Rs 2812.50 — edit per child if needed.
+    </div>
+
+    <div class="child-block">
+      <h3><span class="chip">1st</span> For First Child</h3>
+      <div class="grid c2">
+        <div>
+          <label for="c1_rate">Monthly Rate of CEA (Rs)</label>
+          <input type="number" id="c1_rate" inputmode="decimal" step="0.01" min="0" value="2812.50" />
+        </div>
+        <div>
+          <label for="c1_annual">Annual Amount (Rate × 12)</label>
+          <input type="text" id="c1_annual" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="child-block">
+      <h3><span class="chip">2nd</span> For Second Child <span class="hint">(only if 2nd child entered above)</span></h3>
+      <div class="grid c2">
+        <div>
+          <label for="c2_rate">Monthly Rate of CEA (Rs)</label>
+          <input type="number" id="c2_rate" inputmode="decimal" step="0.01" min="0" value="2812.50" />
+        </div>
+        <div>
+          <label for="c2_annual">Annual Amount (Rate × 12)</label>
+          <input type="text" id="c2_annual" readonly />
+        </div>
+      </div>
+    </div>
+
+    <div class="total-bar">
+      <span>Total Amount Claimed (Rs)</span>
+      <span class="amt" id="totalAmt">0</span>
+    </div>
+  </section>
+
+  <!-- ---------- 5. Declarations ---------- -->
+  <section class="card">
+    <h2><span class="ico">5</span> Declarations</h2>
+    <div class="grid c2">
+      <div>
+        <label for="hostelDist">Hostel Distance (if Hostel Subsidy)</label>
+        <input type="text" id="hostelDist" value="NA" />
+      </div>
+      <div>
+        <label for="prevReceived">Amount already received (prev. qtr.)</label>
+        <input type="text" id="prevReceived" value="NIL" />
+      </div>
+      <div>
+        <label for="disabled">Disabled Child?</label>
+        <select id="disabled">
+          <option value="No" selected>No</option>
+          <option value="Yes">Yes</option>
+        </select>
+      </div>
+      <div class="reveal" id="disBox1">
+        <label for="disNature">Nature of Disability</label>
+        <input type="text" id="disNature" placeholder="e.g. Locomotor" />
+      </div>
+      <div class="reveal" id="disBox2">
+        <label for="disDate">Date of Disability Certificate</label>
+        <input type="date" id="disDate" />
+      </div>
+      <div class="reveal" id="disBox3">
+        <label for="disPct">% of Disability</label>
+        <input type="number" id="disPct" inputmode="numeric" min="0" max="100" placeholder="%" />
+      </div>
+      <div>
+        <label for="bonafide">Bonafide Certificate Attached?</label>
+        <select id="bonafide">
+          <option value="Yes" selected>Yes</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+      <div>
+        <label for="hostelBonafide">Hostel Bonafide Attached?</label>
+        <input type="text" id="hostelBonafide" value="NA" />
+      </div>
+      <div>
+        <label for="hostelAmt">Hostel Subsidy Amount (Rs)</label>
+        <input type="text" id="hostelAmt" value="NA" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 6. Principal Certificate ---------- -->
+  <section class="card">
+    <h2><span class="ico">6</span> Principal Certificate Details</h2>
+    <div class="grid c2">
+      <div>
+        <label for="p3_forChild">Certificate is for:</label>
+        <select id="p3_forChild">
+          <option value="1">First Child</option>
+          <option value="2">Second Child</option>
+        </select>
+      </div>
+      <div>
+        <label for="p3_refNo">Ref No.</label>
+        <input type="text" id="p3_refNo" placeholder="School Ref No." />
+      </div>
+      <div>
+        <label for="p3_certDate">Certificate Date</label>
+        <input type="date" id="p3_certDate" />
+      </div>
+      <div>
+        <label for="p3_admNo">Admission No.</label>
+        <input type="text" id="p3_admNo" />
+      </div>
+      <div>
+        <label for="p3_sec">Section</label>
+        <input type="text" id="p3_sec" placeholder="e.g. A" />
+      </div>
+      <div>
+        <label for="p3_roll">Roll No.</label>
+        <input type="text" id="p3_roll" />
+      </div>
+      <div>
+        <label for="p3_prevAy">Previous Academic Year</label>
+        <select id="p3_prevAy">
+          <option value="">— Year —</option>
+          <option>2022-23</option><option>2023-24</option>
+          <option>2024-25</option><option>2025-26</option>
+        </select>
+      </div>
+      <div>
+        <label for="p3_regdNo">School Affiliation Regd No. / Code</label>
+        <input type="text" id="p3_regdNo" />
+      </div>
+      <div>
+        <label for="p3_pattern">Pattern / Curriculum</label>
+        <select id="p3_pattern">
+          <option value="">— Select —</option>
+          <option>CBSE</option>
+          <option>ICSE</option>
+          <option>State Board</option>
+          <option>IB (International Baccalaureate)</option>
+          <option>Cambridge (IGCSE)</option>
+          <option value="__other__">Other…</option>
+        </select>
+        <input type="text" id="p3_pattern_other" class="reveal" placeholder="Enter curriculum" style="margin-top:6px" />
+      </div>
+      <div>
+        <label for="p3_certPlace">Place (on certificate)</label>
+        <input type="text" id="p3_certPlace" placeholder="Place" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 7. Signature Date & Place ---------- -->
+  <section class="card">
+    <h2><span class="ico">7</span> Signature — Place &amp; Date</h2>
+    <div class="grid c2">
+      <div>
+        <label for="sigPlace">Place</label>
+        <input type="text" id="sigPlace" placeholder="Place" />
+      </div>
+      <div>
+        <label for="sigDate">Date</label>
+        <input type="date" id="sigDate" />
+      </div>
+    </div>
+    <div class="hint" style="margin-top:8px">Same place &amp; date will appear on all 3 signature blocks (Pages 2, 3, 4).</div>
+  </section>
+
+</form>
+
+<!-- ============ PRINT / PREVIEW OUTPUT ============ -->
+<div class="preview-wrap" id="previewWrap">
+  <div class="pv-note">
+    This is a preview of the full proforma that will be printed. Scroll to review, then use
+    <b>Print / Save PDF</b>. Your screen form is hidden during print.
+  </div>
+
+  <!-- PAGE 1 -->
+  <div class="sheet">
+    <h1>PROFORMA FOR RE-IMBURSEMENT OF<br/>CHILDREN EDUCATION ALLOWANCE</h1>
+
+    <p><b>CLAIM FOR THE ACADEMIC YEAR</b>: <span class="blank wide" data-bind="ayDisplay"></span></p>
+
+    <p style="text-indent:24px">I hereby apply for the reimbursement of Children Education Allowance for my child / children and relevant particulars are furnished below:</p>
+
+    <table>
+      <colgroup>
+        <col style="width:12%" />
+        <col style="width:24%" />
+        <col style="width:14%" />
+        <col style="width:18%" />
+        <col />
+      </colgroup>
+      <tr><td class="center">1.</td><td colspan="2">Name &amp; Rank of Govt. Servant</td><td colspan="2">: <span data-bind="empName"></span></td></tr>
+      <tr><td class="center">2.</td><td colspan="2">Emp. Id.</td><td colspan="2">: <span data-bind="empId"></span></td></tr>
+      <tr><td class="center">3.</td><td colspan="2">Designation</td><td colspan="2">: <span data-bind="designationDisplay"></span></td></tr>
+      <tr><td class="center">4.</td><td colspan="2">Name of the Office</td><td colspan="2">: <span data-bind="office"></span></td></tr>
+      <tr><td class="center">5.</td><td colspan="2">If Spouse is employed, state whether in Central Govt., PSU, State Govt., (give details with name of the Spouse)</td><td colspan="2">: <span data-bind="spouseInfo5"></span></td></tr>
+      <tr><td class="center">6.</td><td colspan="2">Designation, Office &amp; B.U. No. of spouse, if spouse is employed in Railway</td><td colspan="2">: <span data-bind="spouseBU"></span></td></tr>
+      <tr><td class="center">7.</td><td colspan="4"><b>Details of the Child/Children for whom CEA/Hostel Subsidy claimed:-</b></td></tr>
+      <tr>
+        <th>Sequence</th>
+        <th>Name of Child</th>
+        <th>DOB</th>
+        <th>Standard (A.Y.)</th>
+        <th>Name &amp; Place of the School / Institution</th>
+      </tr>
+      <tr style="height:44px">
+        <td class="seq">1st Child</td>
+        <td><span data-bind="c1_name"></span></td>
+        <td class="center nowrap"><span data-bind="c1_dob_fmt"></span></td>
+        <td class="center">
+          <div><span data-bind="c1_std"></span></div>
+          <div class="ay-line"><span data-bind="c1_ay"></span></div>
+        </td>
+        <td><span data-bind="c1_school"></span></td>
+      </tr>
+      <tr style="height:44px">
+        <td class="seq">2nd Child</td>
+        <td><span data-bind="c2_name"></span></td>
+        <td class="center nowrap"><span data-bind="c2_dob_fmt"></span></td>
+        <td class="center">
+          <div><span data-bind="c2_std"></span></div>
+          <div class="ay-line"><span data-bind="c2_ay"></span></div>
+        </td>
+        <td><span data-bind="c2_school"></span></td>
+      </tr>
+    </table>
+
+    <p style="margin-top:12px"><b>8. Re-imbursement of Expenditure:</b></p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:14%">Sequence</th>
+          <th style="width:22%">Period</th>
+          <th style="width:18%">Rate of CEA (Rs)</th>
+          <th style="width:18%">Amount Claimed</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="height:30px">
+          <td rowspan="2" class="seq">1st Child</td>
+          <td class="center"><span data-bind="e_1_1_period"></span></td>
+          <td class="center"><span data-bind="e_1_1_rate"></span></td>
+          <td class="center"><span data-bind="e_1_1_amt"></span></td>
+          <td><span data-bind="e_1_1_rem"></span></td>
+        </tr>
+        <tr style="height:30px">
+          <td class="center"><span data-bind="e_1_2_period"></span></td>
+          <td class="center"><span data-bind="e_1_2_rate"></span></td>
+          <td class="center"><span data-bind="e_1_2_amt"></span></td>
+          <td><span data-bind="e_1_2_rem"></span></td>
+        </tr>
+        <tr style="height:30px">
+          <td rowspan="2" class="seq">2nd Child</td>
+          <td class="center"><span data-bind="e_2_1_period"></span></td>
+          <td class="center"><span data-bind="e_2_1_rate"></span></td>
+          <td class="center"><span data-bind="e_2_1_amt"></span></td>
+          <td><span data-bind="e_2_1_rem"></span></td>
+        </tr>
+        <tr style="height:30px">
+          <td class="center"><span data-bind="e_2_2_period"></span></td>
+          <td class="center"><span data-bind="e_2_2_rate"></span></td>
+          <td class="center"><span data-bind="e_2_2_amt"></span></td>
+          <td><span data-bind="e_2_2_rem"></span></td>
+        </tr>
+        <tr>
+          <td colspan="3" class="center"><b>Total amount claimed Rs</b></td>
+          <td colspan="2" class="center"><b><span data-bind="totalAmt"></span></b></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PAGE 2 -->
+  <div class="sheet">
+    <p><b>9.</b> Distance of Hostel of child from residence of employee (in case Hostel Subsidy): <b><span data-bind="hostelDist"></span></b></p>
+
+    <p><b>10.</b> Amount of CEA / Hostel Subsidy already received up to previous quarter: <b><span data-bind="prevReceived"></span></b></p>
+
+    <p><b>11.</b> The Academic year for which CEA / Hostel Subsidy is applied now: <span class="blank wide" data-bind="ayDisplay"></span></p>
+
+    <p><b>12.</b> (a) Whether the child for whom the CEA is applied for is a disabled child : <b><span data-bind="disabled"></span></b></p>
+    <p style="margin-left:24px">(b) If yes, indicate the nature of disability: <span class="blank" data-bind="disNature"></span></p>
+    <p style="margin-left:24px">(c) Date of disability certificate: <span class="blank" data-bind="disDate_fmt"></span></p>
+    <p style="margin-left:24px">(d) Indicate the percentage of disability: <span class="blank narrow" data-bind="disPct"></span></p>
+
+    <p><b>13.</b> Whether the Bonafide certificate from Head of Institution has been attached : <b><span data-bind="bonafide"></span></b></p>
+
+    <p><b>14.</b> For Hostel Subsidy, the Bonafide certificate from mentioning the amount is attached: <b><span data-bind="hostelBonafide"></span></b></p>
+
+    <p><b>15.</b> If Yes at Item No. 14, Amount claimed for Hostel Subsidy: Rs <b><span data-bind="hostelAmt"></span></b></p>
+
+    <p><b>16.</b> (a) Certified that I or my wife / husband <b><span data-bind="q16a"></span></b> a Central Government servant.</p>
+
+    <p style="margin-left:24px">(b) Certified that my wife / husband Sri / Smt <span class="blank" data-bind="spouseName"></span> is presently working as: <span class="blank" data-bind="spouseAs"></span> in <span class="blank" data-bind="spouseOffice"></span> and that he / she <b><span data-bind="spouseApplied"></span></b> for the Children Education Allowance for the child / children mentioned above.</p>
+
+    <p>(c) Certified that I or my wife / husband has not claimed this re-imbursement from any other source and will not claim the same in future.</p>
+
+    <p class="justify"><b>17.</b> Certified that my child in respect of whom re-imbursement of Children Education Allowance is applied is studying in the School / Jr. College which is recognized and affiliated to Board of Education / University.</p>
+
+    <p class="justify"><b>18.</b> Certified that I am claiming the CEA in respect of my two eldest surviving children only. The information furnished above are complete and correct and I have not suppressed any relevant information. In the event of any change in the particulars given above which affect my eligibility for reimbursement of Children Education Allowance, I undertake to intimate the same promptly and also to refund excess payments if any made. Further, I am aware that if at any stage the information / documents furnished above is found to be false, I am liable for disciplinary action.</p>
+
+    <div class="sig">
+      <div class="left">
+        <div>Date: <span data-bind="sigDate_fmt"></span></div>
+        <div>Place: <b><span data-bind="sigPlace"></span></b></div>
+      </div>
+      <div class="right">
+        <div class="title">(Signature of Govt Servant)</div>
+        <div>Name: <span data-bind="empName"></span></div>
+        <div>Desig.: <span data-bind="designationDisplay"></span></div>
+        <div>Emp.Id.: <span data-bind="empId"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 3 -->
+  <div class="sheet">
+    <h1 style="margin-top:30px">CERTIFICATE FROM THE HEAD OF INSTITUTION / SCHOOL</h1>
+    <h2>(FOR REIMBURSMENT CEA)</h2>
+
+    <p><b>Ref No</b>: <span class="blank" data-bind="p3_refNo"></span></p>
+    <p><b>Date:</b> <span class="blank" data-bind="p3_certDate_fmt"></span></p>
+
+    <p style="margin-top:20px">It is certified that <b><span data-bind="p3_salutation"></span></b> <span class="blank wide" data-bind="p3_student"></span> having Admission No. <span class="blank" data-bind="p3_admNo"></span> D.O.B <span class="blank" data-bind="p3_dob_fmt"></span> <b><span data-bind="p3_son"></span></b> of Mr./Mrs. <span class="blank" data-bind="empName"></span> was studying in Class <span class="blank narrow" data-bind="p3_class"></span> Sec <span class="blank narrow" data-bind="p3_sec"></span> Roll No. <span class="blank narrow" data-bind="p3_roll"></span> during the Previous Academic Year from <span class="blank" data-bind="p3_prevAy"></span> <b>School</b> / Institution, namely <span class="blank wide" data-bind="p3_schoolName"></span> vide affiliation Regd No. / Code <span class="blank" data-bind="p3_regdNo"></span> and pattern <span class="blank" data-bind="p3_patternDisplay"></span> Curriculum.</p>
+
+    <p style="margin-top:20px">Place: <span class="blank" data-bind="p3_certPlace"></span></p>
+    <p>Date:- <span class="blank" data-bind="p3_certDate_fmt"></span></p>
+
+    <div class="sig">
+      <div class="left"></div>
+      <div class="right">
+        <div class="title">Signature of Principal</div>
+        <div style="margin-top:8px"><b>(Affix School Stamp)</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 4 -->
+  <div class="sheet">
+    <h1>SELF DECLARATION</h1>
+
+    <p style="margin-top:20px">I <span class="blank wide" data-bind="empName"></span> Emp. ID NO. <span class="blank" data-bind="empId"></span></p>
+
+    <p>Designation <span class="blank" data-bind="designationDisplay"></span> Of <span class="blank wide" data-bind="office"></span></p>
+
+    <p>hereby certify that my <b><span data-bind="p3_son"></span></b> namely <span class="blank wide" data-bind="p3_student"></span></p>
+
+    <p>Studied in Class <span class="blank narrow" data-bind="p3_class"></span> Sec <span class="blank narrow" data-bind="p3_sec"></span> Roll No. <span class="blank narrow" data-bind="p3_roll"></span> during</p>
+
+    <p>Previous Academic Year <span class="blank" data-bind="p3_prevAy"></span> in <span class="blank wide" data-bind="p3_schoolName"></span> School.</p>
+
+    <p class="justify" style="margin-top:20px">In the event of any change in the particulars given above which affect my eligibility for Children Education Allowance. I undertake to intimate the same promptly and refund excess payment, if any made to me.</p>
+
+    <div class="sig" style="margin-top:40px">
+      <div class="left"></div>
+      <div class="right">
+        <div class="title">Signature of Govt Servant</div>
+        <div>Name: <span data-bind="empName"></span></div>
+        <div>Emp. ID.: <span data-bind="empId"></span></div>
+        <div>Desig. <span data-bind="designationDisplay"></span></div>
+      </div>
+    </div>
+
+    <p style="margin-top:30px">Place: <span class="blank" data-bind="sigPlace"></span></p>
+    <p>Date: <span class="blank" data-bind="sigDate_fmt"></span></p>
+  </div>
+
+</div>
+
+</main>
+
+<div class="actionbar">
+  <button type="button" class="btn btn-outline" id="previewBtn">👁️ Preview</button>
+  <button type="button" class="btn btn-primary" id="printBtn">🖨️ Print / Save PDF</button>
+  <button type="button" class="btn btn-outline" id="printViewBtn">📄 PDF View</button>
+  <button type="button" class="btn btn-ghost" id="saveCopyBtn">💾 Save Copy</button>
+  <button type="button" class="btn btn-ghost" id="clearBtn">♻️ Clear</button>
+  <span class="saved-tag" id="savedTag">Auto-saved</span>
+  <span class="print-status" id="printStatus" aria-live="polite"></span>
+</div>
+
+<script>
+(function(){
+  const STORE_KEY = "cea-tuition-form-v2";
+  const form = document.getElementById("ceaForm");
+
+  // ---- Reveal "Other…" text inputs ----
+  function bindOther(selId, inpId){
+    const s=document.getElementById(selId), i=document.getElementById(inpId);
+    if(!s||!i) return;
+    const u=()=>i.classList.toggle("on", s.value==="__other__");
+    s.addEventListener("change", u); u();
+  }
+  bindOther("ay","ay_other");
+  bindOther("designation","designation_other");
+  bindOther("spouseCat","spouseCat_other");
+  bindOther("p3_pattern","p3_pattern_other");
+
+  // ---- Disabled child reveal ----
+  const disSel=document.getElementById("disabled");
+  const disBoxes=["disBox1","disBox2","disBox3"].map(id=>document.getElementById(id));
+  function updDis(){const on=disSel.value==="Yes"; disBoxes.forEach(b=>b.classList.toggle("on",on));}
+  disSel.addEventListener("change",updDis); updDis();
+
+  // ---- Utility ----
+  function v(id){ const el=document.getElementById(id); return el? (el.value||"").trim() : ""; }
+  function fmtDate(s){
+    if(!s) return "";
+    const [y,m,d]=s.split("-"); if(!y||!m||!d) return s;
+    return `${d}/${m}/${y}`;
+  }
+  function getSelectVal(id, otherId){
+    const val=v(id);
+    if(val==="__other__") return v(otherId);
+    return val;
+  }
+
+  // ---- Compute bind values and update preview ----
+  function fmtMoney(n){
+    return n.toLocaleString("en-IN",{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  function render(){
+    // Per-child monthly rates & annual totals (only if that child has a name)
+    const r1 = parseFloat(v("c1_rate")); const r2 = parseFloat(v("c2_rate"));
+    const hasC1 = !!v("c1_name");
+    const hasC2 = !!v("c2_name");
+    const a1 = hasC1 && !isNaN(r1) ? r1 * 12 : 0;
+    const a2 = hasC2 && !isNaN(r2) ? r2 * 12 : 0;
+
+    const c1Annual = document.getElementById("c1_annual");
+    const c2Annual = document.getElementById("c2_annual");
+    if (c1Annual) c1Annual.value = hasC1 && a1 ? fmtMoney(a1) : "";
+    if (c2Annual) c2Annual.value = hasC2 && a2 ? fmtMoney(a2) : "";
+
+    const total = a1 + a2;
+
+    const binds={
+      empName: v("empName"),
+      empId: v("empId"),
+      designationDisplay: getSelectVal("designation","designation_other"),
+      office: v("office"),
+      ayDisplay: getSelectVal("ay","ay_other"),
+
+      // Spouse composite for row 5
+      spouseInfo5: (function(){
+        const cat=getSelectVal("spouseCat","spouseCat_other");
+        const nm=v("spouseName");
+        if(!cat && !nm) return "";
+        if(cat.toLowerCase()==="not employed") return "Not Employed";
+        return [cat, nm && `Name: ${nm}`].filter(Boolean).join(" — ");
+      })(),
+      spouseBU: v("spouseBU"),
+      spouseName: v("spouseName"),
+      spouseAs: v("spouseAs"),
+      spouseOffice: v("spouseOffice"),
+      spouseApplied: v("spouseApplied"),
+      q16a: v("q16a"),
+
+      // Children — if name is blank, leave every cell for that row blank
+      c1_name: v("c1_name"),
+      c1_dob_fmt: v("c1_name") ? fmtDate(v("c1_dob")) : "",
+      c1_std: (function(){ if(!v("c1_name")) return ""; const s=v("c1_std"), y=getSelectVal("ay","ay_other"); return s && y ? `${s} (${y})` : s || ""; })(),
+      c1_school: v("c1_name") ? v("c1_school") : "",
+      c2_name: v("c2_name"),
+      c2_dob_fmt: v("c2_name") ? fmtDate(v("c2_dob")) : "",
+      c2_std: (function(){ if(!v("c2_name")) return ""; const s=v("c2_std"), y=getSelectVal("ay","ay_other"); return s && y ? `${s} (${y})` : s || ""; })(),
+      c2_school: v("c2_name") ? v("c2_school") : "",
+
+      // Declarations
+      hostelDist: v("hostelDist") || "NA",
+      prevReceived: v("prevReceived") || "NIL",
+      disabled: v("disabled"),
+      disNature: v("disNature"),
+      disDate_fmt: fmtDate(v("disDate")),
+      disPct: v("disPct") ? v("disPct")+"%" : "",
+      bonafide: v("bonafide"),
+      hostelBonafide: v("hostelBonafide") || "NA",
+      hostelAmt: v("hostelAmt") || "NA",
+
+      // Signature
+      sigPlace: v("sigPlace"),
+      sigDate_fmt: fmtDate(v("sigDate")),
+
+      // Page 3 — pick child
+      p3_refNo: v("p3_refNo"),
+      p3_certDate_fmt: fmtDate(v("p3_certDate")),
+      p3_admNo: v("p3_admNo"),
+      p3_sec: v("p3_sec"),
+      p3_roll: v("p3_roll"),
+      p3_prevAy: v("p3_prevAy"),
+      p3_regdNo: v("p3_regdNo"),
+      p3_patternDisplay: getSelectVal("p3_pattern","p3_pattern_other"),
+      p3_certPlace: v("p3_certPlace") || v("sigPlace"),
+
+      totalAmt: total ? fmtMoney(total) : "",
+    };
+
+    // Resolve which child is on Page 3
+    const pick = v("p3_forChild")==="2" ? "2" : "1";
+    const chName   = v(`c${pick}_name`);
+    const chDob    = v(`c${pick}_dob`);
+    const chStd    = v(`c${pick}_std`);
+    const chSchool = v(`c${pick}_school`);
+    const chGender = v(`c${pick}_gender`) || "Master";
+
+    binds.p3_student = chName;
+    binds.p3_dob_fmt = fmtDate(chDob);
+    binds.p3_class   = chStd;
+    binds.p3_schoolName = chSchool;
+    binds.p3_salutation = chGender; // Master / Kumari
+    binds.p3_son = chGender === "Kumari" ? "Daughter" : "Son";
+
+    // Expenditure cells — row 1 auto-fills from monthly rate; row 2 stays blank
+    const ay = getSelectVal("ay","ay_other");
+    function fillChild(ch, has, rate, annual){
+      binds[`e_${ch}_1_period`] = has ? ay : "";
+      binds[`e_${ch}_1_rate`]   = has && !isNaN(rate) ? fmtMoney(rate) + " / month" : "";
+      binds[`e_${ch}_1_amt`]    = has && annual ? fmtMoney(annual) : "";
+      binds[`e_${ch}_1_rem`]    = "";
+      binds[`e_${ch}_2_period`] = "";
+      binds[`e_${ch}_2_rate`]   = "";
+      binds[`e_${ch}_2_amt`]    = "";
+      binds[`e_${ch}_2_rem`]    = "";
+    }
+    fillChild(1, hasC1, r1, a1);
+    fillChild(2, hasC2, r2, a2);
+
+    // Apply to DOM
+    document.querySelectorAll("[data-bind]").forEach(el=>{
+      const k=el.getAttribute("data-bind");
+      const val = binds[k] != null ? binds[k] : "";
+      el.textContent = val;
+    });
+
+    // Update total bar
+    document.getElementById("totalAmt").textContent = total ? fmtMoney(total) : "0.00";
+  }
+
+  // ---- Save / Restore ----
+  const savedTag=document.getElementById("savedTag");
+  let saveTimer;
+  function snapshot(){
+    const data={};
+    form.querySelectorAll("input,select,textarea").forEach(el=>{
+      if(!el.id && !el.dataset.ch) return;
+      if(el.id){ data[el.id]=el.value; return; }
+      // For unIDed expenditure cells: encode via data attrs
+      const k = `${el.className.split(" ")[0]}_${el.dataset.ch}_${el.dataset.r}`;
+      data[k] = el.value;
+    });
+    data._savedAt = Date.now();
+    return data;
+  }
+  function embeddedDraft(){
+    const el=document.getElementById("ceaStartupDraft");
+    if(!el || !el.textContent.trim()) return null;
+    try{ return JSON.parse(el.textContent); }catch(e){ return null; }
+  }
+  function restore(){
+    const embedded=embeddedDraft();
+    let localData=null;
+    let raw;
+    try{ raw=localStorage.getItem(STORE_KEY); }catch(e){ raw=null; }
+    if(raw){ try{ localData=JSON.parse(raw); }catch(e){ localData=null; } }
+    const data = embedded && localData
+      ? ((Number(localData._savedAt)||0) > (Number(embedded._savedAt)||0) ? localData : embedded)
+      : (embedded || localData);
+    if(!data) return;
+    Object.keys(data).forEach(k=>{
+      const el=document.getElementById(k);
+      if(el){ el.value=data[k]; return; }
+      // expenditure cells
+      const m = k.match(/^(period|rate|amt-in|remarks)_(\d+)_(\d+)$/);
+      if(m){
+        const sel = document.querySelector(`.${m[1]}[data-ch="${m[2]}"][data-r="${m[3]}"]`);
+        if(sel) sel.value = data[k];
+      }
+    });
+    ["ay","designation","spouseCat","p3_pattern"].forEach(id=>{
+      const s=document.getElementById(id); if(s) s.dispatchEvent(new Event("change"));
+    });
+    updDis();
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(snapshot())); }catch(e){}
+  }
+  function save(){
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(snapshot())); }catch(e){}
+    savedTag.textContent="✓ Saved";
+    clearTimeout(saveTimer);
+    saveTimer=setTimeout(()=>savedTag.textContent="Auto-saved",1400);
+  }
+  function onChange(){ render(); save(); }
+  form.addEventListener("input", onChange);
+  form.addEventListener("change", onChange);
+
+  restore();
+  render();
+
+  // ---- Buttons ----
+  const previewWrap=document.getElementById("previewWrap");
+  const previewBtn=document.getElementById("previewBtn");
+  previewBtn.addEventListener("click",()=>{
+    previewWrap.classList.toggle("on");
+    if(previewWrap.classList.contains("on")){
+      previewBtn.textContent="✖ Close Preview";
+      previewWrap.scrollIntoView({behavior:"smooth",block:"start"});
+    } else {
+      previewBtn.textContent="👁️ Preview";
+      window.scrollTo({top:0,behavior:"smooth"});
+    }
+  });
+
+  const printStatus=document.getElementById("printStatus");
+  function showPrintStatus(msg){
+    printStatus.textContent=msg;
+    printStatus.classList.add("on");
+  }
+
+  function buildPrintDocument(){
+    render();
+    const sheets = Array.from(previewWrap.querySelectorAll(".sheet")).map(el=>el.outerHTML).join("");
+    const css = document.querySelector("style").textContent;
+    return `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CEA Tuition Fee - PDF View</title>
+<style>
+${css}
+body{background:#f3f3f3;color:#000;padding:8px}
+.preview-wrap{display:block!important;margin:0!important;padding:0!important}
+.sheet{box-shadow:0 2px 10px rgba(0,0,0,.16)}
+@media print{
+  body{background:#fff!important;padding:0!important}
+  .preview-wrap{display:block!important;margin:0!important;padding:0!important}
+}
+</style>
+</head>
+<body>
+<div class="preview-wrap on">${sheets}</div>
+</body>
+</html>`;
+  }
+
+  function openPrintView(){
+    const blob = new Blob([buildPrintDocument()], {type:"text/html"});
+    const url = URL.createObjectURL(blob);
+    const win = window.open(url, "_blank");
+    if(!win){
+      URL.revokeObjectURL(url);
+      showPrintStatus("Popup blocked. Use Preview, then open the browser menu and choose Share / Print / Save as PDF.");
+      return;
+    }
+    showPrintStatus("PDF View opened. On mobile, use the browser menu or Share button, then choose Print / Save as PDF.");
+    setTimeout(()=>URL.revokeObjectURL(url), 60000);
+  }
+
+  function filenameDate(){
+    const d=new Date();
+    const pad=n=>String(n).padStart(2,"0");
+    return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+  }
+
+  function buildSavedCopy(){
+    render();
+    const data=snapshot();
+    const draft = `<script id="ceaStartupDraft" type="application/json">${JSON.stringify(data).replace(/</g,"\\u003c")}<\/script>\n`;
+    let html = "<!doctype html>\n" + document.documentElement.outerHTML;
+    const oldDraft = /<script id="ceaStartupDraft" type="application\/json">[\s\S]*?<\/script>\s*/;
+    if(oldDraft.test(html)) html = html.replace(oldDraft, draft);
+    else html = html.replace("</head>", draft + "</head>");
+    return html;
+  }
+
+  function saveFilledCopy(){
+    save();
+    const blob = new Blob([buildSavedCopy()], {type:"text/html"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `cea-tuition-filled-${filenameDate()}.html`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 60000);
+    showPrintStatus("Saved copy requested. If WhatsApp blocks it, open this file in Chrome/Edge/Safari and tap Save Copy again.");
+  }
+
+  window.addEventListener("beforeprint", render);
+
+  document.getElementById("printBtn").addEventListener("click",()=>{
+    if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    render();
+    showPrintStatus("If the print screen does not open, tap PDF View and use Share / Print / Save as PDF.");
+    try{
+      if(typeof window.print==="function") window.print();
+      else openPrintView();
+    }catch(e){
+      openPrintView();
+    }
+  });
+
+  document.getElementById("printViewBtn").addEventListener("click",()=>{
+    if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    openPrintView();
+  });
+
+  document.getElementById("saveCopyBtn").addEventListener("click",()=>{
+    if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+    saveFilledCopy();
+  });
+
+  document.getElementById("clearBtn").addEventListener("click",()=>{
+    if(!confirm("Clear all fields? This cannot be undone.")) return;
+    try{ localStorage.removeItem(STORE_KEY); }catch(e){}
+    form.querySelectorAll("input,select,textarea").forEach(el=>{
+      if(el.type==="date") el.value="";
+      else if(el.tagName==="SELECT") el.selectedIndex=0;
+      else el.value="";
+    });
+    document.getElementById("hostelDist").value="NA";
+    document.getElementById("prevReceived").value="NIL";
+    document.getElementById("hostelBonafide").value="NA";
+    document.getElementById("hostelAmt").value="NA";
+    document.getElementById("disabled").value="No";
+    document.getElementById("bonafide").value="Yes";
+    document.getElementById("q16a").value="is not";
+    document.getElementById("spouseApplied").value="shall not apply / has not applied";
+    updDis();
+    ["ay","designation","spouseCat","p3_pattern"].forEach(id=>{
+      const s=document.getElementById(id); if(s) s.dispatchEvent(new Event("change"));
+    });
+    render();
+    save();
+    window.scrollTo({top:0,behavior:"smooth"});
+  });
+
+  if("serviceWorker" in navigator && /^https?:$/.test(location.protocol)){
+    window.addEventListener("load",()=>{
+      navigator.serviceWorker.register("./sw.js").catch(()=>{});
+    });
+  }
+})();
+</script>
+</body>
+</html>

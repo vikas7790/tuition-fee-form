@@ -1,0 +1,10 @@
+{
+  "name": "CEA Tuition Fee Form",
+  "short_name": "CEA Form",
+  "description": "Mobile-friendly CEA tuition fee reimbursement form with print and PDF support.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#fff8e1",
+  "theme_color": "#800000"
+}
