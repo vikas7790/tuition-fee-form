@@ -1,11 +1,6 @@
-.vercel
-.DS_Store
-Thumbs.db
 *.pdf
 *.png
 temp-*
 pw-page-*
 pdf-page-*
 playwright-output.pdf
-
-.vercel

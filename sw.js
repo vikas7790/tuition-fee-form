@@ -1,4 +1,4 @@
-const CACHE_NAME = "cea-tuition-form-v1";
+const CACHE_NAME = "cea-tuition-form-v5";
 const APP_SHELL = [
   "./",
   "./index.html",

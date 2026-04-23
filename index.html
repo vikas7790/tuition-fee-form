@@ -179,6 +179,7 @@
 
   .reveal{ display:none }
   .reveal.on{ display:block }
+  .hidden-doc{ display:none !important; }
 
   /* Action bar */
   .actionbar{
@@ -282,6 +283,7 @@
   .sheet table th{ background:#eee; font-weight:700; text-align:center }
   .sheet table td.center{ text-align:center }
   .sheet table td.seq{ text-align:center; font-weight:600 }
+  .sheet td.nowrap{ white-space:nowrap }
   /* All filled data values render bold */
   .sheet [data-bind]{ font-weight:700 }
   .sheet .num-list{ counter-reset:qn; margin:6px 0 }
@@ -296,6 +298,23 @@
   .sheet .sig .right{ text-align:left; min-width:240px }
   .sheet .sig .right .title{ font-weight:700; margin-bottom:6px }
   .sheet .sig .right div{ margin:2px 0 }
+  .doc-page .blank{
+    vertical-align:baseline;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:clip;
+  }
+  .doc-page .w-xxs{ width:42px; min-width:42px; max-width:42px; }
+  .doc-page .w-xs{ width:72px; min-width:72px; max-width:72px; }
+  .doc-page .w-s{ width:110px; min-width:110px; max-width:110px; }
+  .doc-page .w-m{ width:160px; min-width:160px; max-width:160px; }
+  .doc-page .w-l{ width:230px; min-width:230px; max-width:230px; }
+  .doc-page .w-xl{ width:320px; min-width:320px; max-width:320px; }
+  .doc-page .doc-line{
+    display:block;
+    margin:14px 0;
+  }
+  .doc-page .doc-line.tight{ margin:9px 0; }
 
   /* Force page breaks in print */
   .sheet{ page-break-after: always; }
@@ -314,6 +333,15 @@
       margin:0 !important; max-width:none !important;
       padding:14mm 14mm !important;
     }
+    .sheet tr{ height:auto !important; page-break-inside:avoid !important; break-inside:avoid !important; }
+    .sheet table{ page-break-inside:avoid !important; break-inside:avoid !important; }
+    .sheet-page-1 p{ margin:5px 0 !important; }
+    .sheet-page-1 table{ margin:5px 0 !important; font-size:11pt !important; }
+    .sheet-page-1 table th, .sheet-page-1 table td{ padding:4px 6px !important; }
+    .sheet table td, .sheet table th{ vertical-align:middle !important; }
+    .sheet .blank{ vertical-align:baseline !important; }
+    .doc-page .blank{ overflow:visible !important; }
+    .doc-page.hidden-doc{ display:none !important; }
   }
 </style>
 </head>
@@ -631,31 +659,12 @@
     <h2><span class="ico">6</span> Principal Certificate Details</h2>
     <div class="grid c2">
       <div>
-        <label for="p3_forChild">Certificate is for:</label>
-        <select id="p3_forChild">
-          <option value="1">First Child</option>
-          <option value="2">Second Child</option>
-        </select>
-      </div>
-      <div>
         <label for="p3_refNo">Ref No.</label>
         <input type="text" id="p3_refNo" placeholder="School Ref No." />
       </div>
       <div>
         <label for="p3_certDate">Certificate Date</label>
         <input type="date" id="p3_certDate" />
-      </div>
-      <div>
-        <label for="p3_admNo">Admission No.</label>
-        <input type="text" id="p3_admNo" />
-      </div>
-      <div>
-        <label for="p3_sec">Section</label>
-        <input type="text" id="p3_sec" placeholder="e.g. A" />
-      </div>
-      <div>
-        <label for="p3_roll">Roll No.</label>
-        <input type="text" id="p3_roll" />
       </div>
       <div>
         <label for="p3_prevAy">Previous Academic Year</label>
@@ -687,6 +696,42 @@
         <input type="text" id="p3_certPlace" placeholder="Place" />
       </div>
     </div>
+
+    <div class="child-block">
+      <h3><span class="chip">1st</span> First Child Certificate Fields</h3>
+      <div class="grid c3">
+        <div>
+          <label for="c1_admNo">Admission No.</label>
+          <input type="text" id="c1_admNo" />
+        </div>
+        <div>
+          <label for="c1_sec">Section</label>
+          <input type="text" id="c1_sec" placeholder="e.g. A" />
+        </div>
+        <div>
+          <label for="c1_roll">Roll No.</label>
+          <input type="text" id="c1_roll" />
+        </div>
+      </div>
+    </div>
+
+    <div class="child-block">
+      <h3><span class="chip">2nd</span> Second Child Certificate Fields <span class="hint">(fill if second child certificate is needed)</span></h3>
+      <div class="grid c3">
+        <div>
+          <label for="c2_admNo">Admission No.</label>
+          <input type="text" id="c2_admNo" />
+        </div>
+        <div>
+          <label for="c2_sec">Section</label>
+          <input type="text" id="c2_sec" placeholder="e.g. A" />
+        </div>
+        <div>
+          <label for="c2_roll">Roll No.</label>
+          <input type="text" id="c2_roll" />
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- ---------- 7. Signature Date & Place ---------- -->
@@ -702,7 +747,7 @@
         <input type="date" id="sigDate" />
       </div>
     </div>
-    <div class="hint" style="margin-top:8px">Same place &amp; date will appear on all 3 signature blocks (Pages 2, 3, 4).</div>
+    <div class="hint" style="margin-top:8px">Same place &amp; date will appear on all signature blocks, including child-specific certificate and declaration pages.</div>
   </section>
 
 </form>
@@ -715,7 +760,7 @@
   </div>
 
   <!-- PAGE 1 -->
-  <div class="sheet">
+  <div class="sheet sheet-page-1">
     <h1>PROFORMA FOR RE-IMBURSEMENT OF<br/>CHILDREN EDUCATION ALLOWANCE</h1>
 
     <p><b>CLAIM FOR THE ACADEMIC YEAR</b>: <span class="blank wide" data-bind="ayDisplay"></span></p>
@@ -744,24 +789,18 @@
         <th>Standard (A.Y.)</th>
         <th>Name &amp; Place of the School / Institution</th>
       </tr>
-      <tr style="height:44px">
+    <tr>
         <td class="seq">1st Child</td>
         <td><span data-bind="c1_name"></span></td>
         <td class="center nowrap"><span data-bind="c1_dob_fmt"></span></td>
-        <td class="center">
-          <div><span data-bind="c1_std"></span></div>
-          <div class="ay-line"><span data-bind="c1_ay"></span></div>
-        </td>
+        <td class="center"><span data-bind="c1_std"></span></td>
         <td><span data-bind="c1_school"></span></td>
       </tr>
-      <tr style="height:44px">
+    <tr>
         <td class="seq">2nd Child</td>
         <td><span data-bind="c2_name"></span></td>
         <td class="center nowrap"><span data-bind="c2_dob_fmt"></span></td>
-        <td class="center">
-          <div><span data-bind="c2_std"></span></div>
-          <div class="ay-line"><span data-bind="c2_ay"></span></div>
-        </td>
+        <td class="center"><span data-bind="c2_std"></span></td>
         <td><span data-bind="c2_school"></span></td>
       </tr>
     </table>
@@ -778,27 +817,27 @@
         </tr>
       </thead>
       <tbody>
-        <tr style="height:30px">
+        <tr>
           <td rowspan="2" class="seq">1st Child</td>
           <td class="center"><span data-bind="e_1_1_period"></span></td>
           <td class="center"><span data-bind="e_1_1_rate"></span></td>
           <td class="center"><span data-bind="e_1_1_amt"></span></td>
           <td><span data-bind="e_1_1_rem"></span></td>
         </tr>
-        <tr style="height:30px">
+        <tr>
           <td class="center"><span data-bind="e_1_2_period"></span></td>
           <td class="center"><span data-bind="e_1_2_rate"></span></td>
           <td class="center"><span data-bind="e_1_2_amt"></span></td>
           <td><span data-bind="e_1_2_rem"></span></td>
         </tr>
-        <tr style="height:30px">
+        <tr>
           <td rowspan="2" class="seq">2nd Child</td>
           <td class="center"><span data-bind="e_2_1_period"></span></td>
           <td class="center"><span data-bind="e_2_1_rate"></span></td>
           <td class="center"><span data-bind="e_2_1_amt"></span></td>
           <td><span data-bind="e_2_1_rem"></span></td>
         </tr>
-        <tr style="height:30px">
+        <tr>
           <td class="center"><span data-bind="e_2_2_period"></span></td>
           <td class="center"><span data-bind="e_2_2_rate"></span></td>
           <td class="center"><span data-bind="e_2_2_amt"></span></td>
@@ -856,17 +895,26 @@
   </div>
 
   <!-- PAGE 3 -->
-  <div class="sheet">
+  <div class="sheet doc-page">
     <h1 style="margin-top:30px">CERTIFICATE FROM THE HEAD OF INSTITUTION / SCHOOL</h1>
     <h2>(FOR REIMBURSMENT CEA)</h2>
 
-    <p><b>Ref No</b>: <span class="blank" data-bind="p3_refNo"></span></p>
-    <p><b>Date:</b> <span class="blank" data-bind="p3_certDate_fmt"></span></p>
+    <p><b>Ref No</b>: <span class="blank w-m" data-bind="cert_refNo"></span></p>
+    <p><b>Date:</b> <span class="blank w-m" data-bind="cert_date_fmt"></span></p>
 
-    <p style="margin-top:20px">It is certified that <b><span data-bind="p3_salutation"></span></b> <span class="blank wide" data-bind="p3_student"></span> having Admission No. <span class="blank" data-bind="p3_admNo"></span> D.O.B <span class="blank" data-bind="p3_dob_fmt"></span> <b><span data-bind="p3_son"></span></b> of Mr./Mrs. <span class="blank" data-bind="empName"></span> was studying in Class <span class="blank narrow" data-bind="p3_class"></span> Sec <span class="blank narrow" data-bind="p3_sec"></span> Roll No. <span class="blank narrow" data-bind="p3_roll"></span> during the Previous Academic Year from <span class="blank" data-bind="p3_prevAy"></span> <b>School</b> / Institution, namely <span class="blank wide" data-bind="p3_schoolName"></span> vide affiliation Regd No. / Code <span class="blank" data-bind="p3_regdNo"></span> and pattern <span class="blank" data-bind="p3_patternDisplay"></span> Curriculum.</p>
+    <div style="margin-top:20px">
+      <div class="doc-line">It is certified that <b><span class="blank w-xs" data-bind="doc1_salutation"></span></b> <span class="blank w-l" data-bind="doc1_student"></span></div>
+      <div class="doc-line">having Admission No. <span class="blank w-xs" data-bind="doc1_admNo"></span></div>
+      <div class="doc-line">D.O.B <span class="blank w-m" data-bind="doc1_dob_fmt"></span> <b><span class="blank w-xs" data-bind="doc1_son"></span></b> of Mr./Mrs. <span class="blank w-l" data-bind="empName"></span></div>
+      <div class="doc-line">was studying in Class <span class="blank w-xs" data-bind="doc1_class"></span> Sec <span class="blank w-xxs" data-bind="doc1_sec"></span> Roll No. <span class="blank w-xs" data-bind="doc1_roll"></span></div>
+      <div class="doc-line">during the Previous Academic Year <span class="blank w-s" data-bind="cert_prevAy"></span> from</div>
+      <div class="doc-line" style="display:flex;align-items:baseline;gap:4px"><span style="white-space:nowrap">School / Institution, namely</span><span style="border-bottom:1px solid #000;flex:1;padding:0 4px;font-weight:700;word-break:break-word" data-bind="doc1_schoolName"></span></div>
+      <div class="doc-line">vide affiliation Regd No. / Code <span class="blank w-s" data-bind="cert_regdNo"></span></div>
+      <div class="doc-line">and pattern <span class="blank w-s" data-bind="cert_patternDisplay"></span> Curriculum.</div>
+    </div>
 
-    <p style="margin-top:20px">Place: <span class="blank" data-bind="p3_certPlace"></span></p>
-    <p>Date:- <span class="blank" data-bind="p3_certDate_fmt"></span></p>
+    <p style="margin-top:20px">Place: <span class="blank w-m" data-bind="cert_place"></span></p>
+    <p>Date:- <span class="blank w-m" data-bind="cert_date_fmt"></span></p>
 
     <div class="sig">
       <div class="left"></div>
@@ -878,22 +926,23 @@
   </div>
 
   <!-- PAGE 4 -->
-  <div class="sheet">
+  <div class="sheet doc-page">
     <h1>SELF DECLARATION</h1>
 
-    <p style="margin-top:20px">I <span class="blank wide" data-bind="empName"></span> Emp. ID NO. <span class="blank" data-bind="empId"></span></p>
+    <p style="margin-top:20px">I <span class="blank w-l" data-bind="empName"></span> Emp. ID NO. <span class="blank w-m" data-bind="empId"></span></p>
 
-    <p>Designation <span class="blank" data-bind="designationDisplay"></span> Of <span class="blank wide" data-bind="office"></span></p>
+    <p>Designation <span class="blank w-l" data-bind="designationDisplay"></span> Of <span class="blank w-l" data-bind="office"></span></p>
 
-    <p>hereby certify that my <b><span data-bind="p3_son"></span></b> namely <span class="blank wide" data-bind="p3_student"></span></p>
-
-    <p>Studied in Class <span class="blank narrow" data-bind="p3_class"></span> Sec <span class="blank narrow" data-bind="p3_sec"></span> Roll No. <span class="blank narrow" data-bind="p3_roll"></span> during</p>
-
-    <p>Previous Academic Year <span class="blank" data-bind="p3_prevAy"></span> in <span class="blank wide" data-bind="p3_schoolName"></span> School.</p>
+    <div style="margin-top:12px">
+      <div class="doc-line tight">hereby certify that my <b><span class="blank w-xs" data-bind="doc1_son"></span></b> namely <span class="blank w-l" data-bind="doc1_student"></span></div>
+      <div class="doc-line tight">Studied in Class <span class="blank w-xs" data-bind="doc1_class"></span> Sec <span class="blank w-xxs" data-bind="doc1_sec"></span> Roll No. <span class="blank w-xs" data-bind="doc1_roll"></span> during</div>
+      <div class="doc-line tight">Previous Academic Year <span class="blank w-s" data-bind="cert_prevAy"></span> in</div>
+      <div class="doc-line tight" style="display:flex;align-items:baseline;gap:6px"><span style="border-bottom:1px solid #000;flex:1;padding:0 4px;font-weight:700;word-break:break-word" data-bind="doc1_schoolName"></span><span style="white-space:nowrap">School.</span></div>
+    </div>
 
     <p class="justify" style="margin-top:20px">In the event of any change in the particulars given above which affect my eligibility for Children Education Allowance. I undertake to intimate the same promptly and refund excess payment, if any made to me.</p>
 
-    <div class="sig" style="margin-top:40px">
+    <div class="sig" style="margin-top:22px">
       <div class="left"></div>
       <div class="right">
         <div class="title">Signature of Govt Servant</div>
@@ -903,7 +952,69 @@
       </div>
     </div>
 
-    <p style="margin-top:30px">Place: <span class="blank" data-bind="sigPlace"></span></p>
+    <p style="margin-top:14px">Place: <span class="blank" data-bind="sigPlace"></span></p>
+    <p>Date: <span class="blank" data-bind="sigDate_fmt"></span></p>
+  </div>
+
+  <!-- PAGE 5 -->
+  <div class="sheet doc-page doc2-page">
+    <h1 style="margin-top:30px">CERTIFICATE FROM THE HEAD OF INSTITUTION / SCHOOL</h1>
+    <h2>(FOR REIMBURSMENT CEA)</h2>
+
+    <p><b>Ref No</b>: <span class="blank w-m" data-bind="cert_refNo"></span></p>
+    <p><b>Date:</b> <span class="blank w-m" data-bind="cert_date_fmt"></span></p>
+
+    <div style="margin-top:20px">
+      <div class="doc-line">It is certified that <b><span class="blank w-xs" data-bind="doc2_salutation"></span></b> <span class="blank w-l" data-bind="doc2_student"></span></div>
+      <div class="doc-line">having Admission No. <span class="blank w-xs" data-bind="doc2_admNo"></span></div>
+      <div class="doc-line">D.O.B <span class="blank w-m" data-bind="doc2_dob_fmt"></span> <b><span class="blank w-xs" data-bind="doc2_son"></span></b> of Mr./Mrs. <span class="blank w-l" data-bind="empName"></span></div>
+      <div class="doc-line">was studying in Class <span class="blank w-xs" data-bind="doc2_class"></span> Sec <span class="blank w-xxs" data-bind="doc2_sec"></span> Roll No. <span class="blank w-xs" data-bind="doc2_roll"></span></div>
+      <div class="doc-line">during the Previous Academic Year <span class="blank w-s" data-bind="cert_prevAy"></span> from</div>
+      <div class="doc-line" style="display:flex;align-items:baseline;gap:4px"><span style="white-space:nowrap">School / Institution, namely</span><span style="border-bottom:1px solid #000;flex:1;padding:0 4px;font-weight:700;word-break:break-word" data-bind="doc2_schoolName"></span></div>
+      <div class="doc-line">vide affiliation Regd No. / Code <span class="blank w-s" data-bind="cert_regdNo"></span></div>
+      <div class="doc-line">and pattern <span class="blank w-s" data-bind="cert_patternDisplay"></span> Curriculum.</div>
+    </div>
+
+    <p style="margin-top:20px">Place: <span class="blank w-m" data-bind="cert_place"></span></p>
+    <p>Date:- <span class="blank w-m" data-bind="cert_date_fmt"></span></p>
+
+    <div class="sig">
+      <div class="left"></div>
+      <div class="right">
+        <div class="title">Signature of Principal</div>
+        <div style="margin-top:8px"><b>(Affix School Stamp)</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 6 -->
+  <div class="sheet doc-page doc2-page">
+    <h1>SELF DECLARATION</h1>
+
+    <p style="margin-top:20px">I <span class="blank w-l" data-bind="empName"></span> Emp. ID NO. <span class="blank w-m" data-bind="empId"></span></p>
+
+    <p>Designation <span class="blank w-l" data-bind="designationDisplay"></span> Of <span class="blank w-l" data-bind="office"></span></p>
+
+    <div style="margin-top:12px">
+      <div class="doc-line tight">hereby certify that my <b><span class="blank w-xs" data-bind="doc2_son"></span></b> namely <span class="blank w-l" data-bind="doc2_student"></span></div>
+      <div class="doc-line tight">Studied in Class <span class="blank w-xs" data-bind="doc2_class"></span> Sec <span class="blank w-xxs" data-bind="doc2_sec"></span> Roll No. <span class="blank w-xs" data-bind="doc2_roll"></span> during</div>
+      <div class="doc-line tight">Previous Academic Year <span class="blank w-s" data-bind="cert_prevAy"></span> in</div>
+      <div class="doc-line tight" style="display:flex;align-items:baseline;gap:6px"><span style="border-bottom:1px solid #000;flex:1;padding:0 4px;font-weight:700;word-break:break-word" data-bind="doc2_schoolName"></span><span style="white-space:nowrap">School.</span></div>
+    </div>
+
+    <p class="justify" style="margin-top:20px">In the event of any change in the particulars given above which affect my eligibility for Children Education Allowance. I undertake to intimate the same promptly and refund excess payment, if any made to me.</p>
+
+    <div class="sig" style="margin-top:22px">
+      <div class="left"></div>
+      <div class="right">
+        <div class="title">Signature of Govt Servant</div>
+        <div>Name: <span data-bind="empName"></span></div>
+        <div>Emp. ID.: <span data-bind="empId"></span></div>
+        <div>Desig. <span data-bind="designationDisplay"></span></div>
+      </div>
+    </div>
+
+    <p style="margin-top:14px">Place: <span class="blank" data-bind="sigPlace"></span></p>
     <p>Date: <span class="blank" data-bind="sigDate_fmt"></span></p>
   </div>
 
@@ -1024,33 +1135,31 @@
       sigDate_fmt: fmtDate(v("sigDate")),
 
       // Page 3 — pick child
-      p3_refNo: v("p3_refNo"),
-      p3_certDate_fmt: fmtDate(v("p3_certDate")),
-      p3_admNo: v("p3_admNo"),
-      p3_sec: v("p3_sec"),
-      p3_roll: v("p3_roll"),
-      p3_prevAy: v("p3_prevAy"),
-      p3_regdNo: v("p3_regdNo"),
-      p3_patternDisplay: getSelectVal("p3_pattern","p3_pattern_other"),
-      p3_certPlace: v("p3_certPlace") || v("sigPlace"),
+      cert_refNo: v("p3_refNo"),
+      cert_date_fmt: fmtDate(v("p3_certDate")),
+      cert_prevAy: v("p3_prevAy"),
+      cert_regdNo: v("p3_regdNo"),
+      cert_patternDisplay: getSelectVal("p3_pattern","p3_pattern_other"),
+      cert_place: v("p3_certPlace") || v("sigPlace"),
 
       totalAmt: total ? fmtMoney(total) : "",
     };
 
-    // Resolve which child is on Page 3
-    const pick = v("p3_forChild")==="2" ? "2" : "1";
-    const chName   = v(`c${pick}_name`);
-    const chDob    = v(`c${pick}_dob`);
-    const chStd    = v(`c${pick}_std`);
-    const chSchool = v(`c${pick}_school`);
-    const chGender = v(`c${pick}_gender`) || "Master";
-
-    binds.p3_student = chName;
-    binds.p3_dob_fmt = fmtDate(chDob);
-    binds.p3_class   = chStd;
-    binds.p3_schoolName = chSchool;
-    binds.p3_salutation = chGender; // Master / Kumari
-    binds.p3_son = chGender === "Kumari" ? "Daughter" : "Son";
+    function bindDoc(prefix, ch){
+      const hasChild = !!v(`c${ch}_name`);
+      const gender = v(`c${ch}_gender`) || "Master";
+      binds[`${prefix}_student`] = hasChild ? v(`c${ch}_name`) : "";
+      binds[`${prefix}_dob_fmt`] = hasChild ? fmtDate(v(`c${ch}_dob`)) : "";
+      binds[`${prefix}_class`] = hasChild ? v(`c${ch}_std`) : "";
+      binds[`${prefix}_schoolName`] = hasChild ? v(`c${ch}_school`) : "";
+      binds[`${prefix}_salutation`] = hasChild ? gender : "";
+      binds[`${prefix}_son`] = hasChild ? (gender === "Kumari" ? "Daughter" : "Son") : "";
+      binds[`${prefix}_admNo`] = hasChild ? v(`c${ch}_admNo`) : "";
+      binds[`${prefix}_sec`] = hasChild ? v(`c${ch}_sec`) : "";
+      binds[`${prefix}_roll`] = hasChild ? v(`c${ch}_roll`) : "";
+    }
+    bindDoc("doc1", 1);
+    bindDoc("doc2", 2);
 
     // Expenditure cells — row 1 auto-fills from monthly rate; row 2 stays blank
     const ay = getSelectVal("ay","ay_other");
@@ -1072,6 +1181,10 @@
       const k=el.getAttribute("data-bind");
       const val = binds[k] != null ? binds[k] : "";
       el.textContent = val;
+    });
+
+    document.querySelectorAll(".doc2-page").forEach(el=>{
+      el.classList.toggle("hidden-doc", !hasC2);
     });
 
     // Update total bar
