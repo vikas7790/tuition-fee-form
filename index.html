@@ -1282,9 +1282,16 @@
 <title>CEA Tuition Fee - PDF View</title>
 <style>
 ${css}
-body{background:#f3f3f3;color:#000;padding:8px}
+/* Match print layout so PDF view and print look identical */
+body{background:#e8e8e8;color:#000;padding:8px 4px;margin:0}
 .preview-wrap{display:block!important;margin:0!important;padding:0!important}
-.sheet{box-shadow:0 2px 10px rgba(0,0,0,.16)}
+.sheet{border:none!important;padding:14mm 14mm!important;margin:0 auto 14px!important;max-width:210mm!important}
+.sheet-page-1 p{margin:5px 0!important}
+.sheet-page-1 table{margin:5px 0!important;font-size:11pt!important}
+.sheet-page-1 table th,.sheet-page-1 table td{padding:4px 6px!important}
+.sheet table td,.sheet table th{vertical-align:middle!important}
+.sheet .blank{vertical-align:baseline!important}
+.doc-page .blank{overflow:visible!important}
 @media print{
   body{background:#fff!important;padding:0!important}
   .preview-wrap{display:block!important;margin:0!important;padding:0!important}
@@ -1293,6 +1300,23 @@ body{background:#f3f3f3;color:#000;padding:8px}
 </head>
 <body>
 <div class="preview-wrap on">${sheets}</div>
+<script>
+(function(){
+  function fit(){
+    var s=document.querySelector('.sheet');
+    if(!s) return;
+    var sw=s.offsetWidth;
+    var aw=window.innerWidth-8;
+    if(aw<sw){
+      var z=aw/sw;
+      document.querySelectorAll('.sheet').forEach(function(el){el.style.zoom=z;});
+      document.body.style.overflowX='hidden';
+    }
+  }
+  fit();
+  window.addEventListener('resize',fit);
+})();
+<\/script>
 </body>
 </html>`;
   }
