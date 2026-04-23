@@ -320,7 +320,7 @@
   .sheet{ page-break-after: always; }
   .sheet:last-child{ page-break-after:auto }
 
-  @page { size: A4; margin: 18mm 16mm; }
+  @page { size: A4; margin: 0; }
   @media print{
     body{
       background:#fff !important;
@@ -331,7 +331,7 @@
     .sheet{
       box-shadow:none !important; border:none !important;
       margin:0 !important; max-width:none !important;
-      padding:0 !important;
+      padding:18mm 16mm !important;
     }
     .sheet tr{ height:auto !important; page-break-inside:avoid !important; break-inside:avoid !important; }
     .sheet table{ page-break-inside:avoid !important; break-inside:avoid !important; }
@@ -1280,8 +1280,12 @@
 <title>CEA Tuition Fee - PDF View</title>
 <style>
 ${css}
-/* Match print layout so PDF view and print look identical */
-body{background:#e8e8e8;color:#000;padding:8px 4px;margin:0}
+body{background:#e8e8e8;color:#000;padding:52px 4px 8px;margin:0}
+#pv-bar{position:fixed;top:0;left:0;right:0;z-index:100;background:#800000;color:#fff;padding:7px 14px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-family:"Segoe UI",sans-serif;font-size:13px}
+#pv-bar b{font-size:14px}
+#pv-bar .pv-btn{background:#f5c518;color:#5c0000;border:none;padding:7px 18px;border-radius:999px;font-weight:700;cursor:pointer;font-size:13px}
+#pv-bar .tip{background:rgba(255,255,255,.15);border-radius:6px;padding:4px 10px;font-size:12px;line-height:1.4}
+#pv-bar .tip b{color:#f5c518}
 .preview-wrap{display:block!important;margin:0!important;padding:0!important}
 .sheet{border:none!important;padding:18mm 16mm!important;margin:0 auto 14px!important;max-width:210mm!important}
 .sheet-page-1 p{margin:5px 0!important}
@@ -1289,12 +1293,18 @@ body{background:#e8e8e8;color:#000;padding:8px 4px;margin:0}
 .sheet .blank{vertical-align:baseline!important}
 .doc-page .blank{overflow:visible!important}
 @media print{
+  #pv-bar{display:none!important}
   body{background:#fff!important;padding:0!important}
   .preview-wrap{display:block!important;margin:0!important;padding:0!important}
 }
 </style>
 </head>
 <body>
+<div id="pv-bar">
+  <b>PDF View</b>
+  <button class="pv-btn" onclick="window.print()">🖨️ Print / Save PDF</button>
+  <span class="tip">⚠️ Chrome: open <b>More settings</b> → set <b>Margins: None</b> and <b>Scale: 100%</b> for exact size match</span>
+</div>
 <div class="preview-wrap on">${sheets}</div>
 <script>
 (function(){
@@ -1365,14 +1375,8 @@ body{background:#e8e8e8;color:#000;padding:8px 4px;margin:0}
 
   document.getElementById("printBtn").addEventListener("click",()=>{
     if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
-    render();
-    showPrintStatus("If the print screen does not open, tap PDF View and use Share / Print / Save as PDF.");
-    try{
-      if(typeof window.print==="function") window.print();
-      else openPrintView();
-    }catch(e){
-      openPrintView();
-    }
+    openPrintView();
+    showPrintStatus("PDF view opened — click the red bar's Print button. Chrome: Margins → None, Scale → 100% for exact size.");
   });
 
   document.getElementById("printViewBtn").addEventListener("click",()=>{
